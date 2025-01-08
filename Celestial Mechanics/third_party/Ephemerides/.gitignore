@@ -1,0 +1,14 @@
+/build
+/.idea
+/results
+
+/cmake-build-debug/*
+/cmake-build-release/*
+
+main.cpp
+a.out
+*.swp
+test_package/build/
+
+*.g3log.*
+/clear_log.sh

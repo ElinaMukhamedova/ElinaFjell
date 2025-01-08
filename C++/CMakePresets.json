@@ -1,0 +1,15 @@
+{
+    "version": 10,
+    "configurePresets": [
+        {
+            "name": "default",
+            "description": "Default build using Makefile generator",
+            "hidden": false,
+            "generator": "Unix Makefiles",
+            "binaryDir": "${workspaceFolder}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        }
+    ]
+}

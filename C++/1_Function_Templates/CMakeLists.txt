@@ -1,0 +1,5 @@
+add_executable(max_overload max_overload.cpp)
+add_executable(max_default_overload max_default_overload.cpp)
+add_executable(max_pointerCstring_overload max_pointerCstring_overload.cpp)
+add_executable(max_reference_overload max_reference_overload.cpp)
+add_executable(max_invisible_overload max_invisible_overload.cpp)
