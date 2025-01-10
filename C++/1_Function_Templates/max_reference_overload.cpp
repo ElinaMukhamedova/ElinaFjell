@@ -28,6 +28,6 @@ int main() {
     char const* s1 = "frederic";
     char const* s2 = "anica";
     char const* s3 = "lucas";
-    auto m2 = ::max(s1, s2, s3);    //run-time ERROR
+    auto m2 = ::max(s1, s2, s3);    //run-time ERROR (undefined behaviour)
     std::cout << m2 << '\n';
 }

@@ -3,3 +3,4 @@ project(C++)
 set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(1_Function_Templates)
+add_subdirectory(2_Class_Templates)
