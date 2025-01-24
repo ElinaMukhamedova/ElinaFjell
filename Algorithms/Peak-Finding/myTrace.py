@@ -70,7 +70,7 @@ class TraceRecord(object):
             "numCols" : subproblem.numCols
         })
 
-    def bestSeen(self, bestSeen):
+    def setBestSeen(self, bestSeen):
         """
         A function for recording the fact that the variable "bestSeen" has been
         updated.
