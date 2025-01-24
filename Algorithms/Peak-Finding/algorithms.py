@@ -170,7 +170,7 @@ def algorithm4(problem, bestSeen = None, rowSplit = True, trace = None):
     
     # figure out which subproblem contains the largest number we've seen so far,
     # and recurse, alternating between splitting on rows and
-    # splitting on clumns
+    # splitting on columns
     sub = problem.getSubproblemContaining(subproblems, bestSeen)
     newBest = sub.getLocationInSelf(problem, bestSeen)
     if not trace is None:
