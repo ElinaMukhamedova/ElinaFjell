@@ -1,3 +1,6 @@
+#pragma once
+
+
 // to be able to use the maximum function at compile time
 // (in places with compile-time context),
 // declare it as follows:
