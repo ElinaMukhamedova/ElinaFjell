@@ -1,0 +1,1 @@
+add_executable(foldtraverse 3_foldtraverse.cpp)
