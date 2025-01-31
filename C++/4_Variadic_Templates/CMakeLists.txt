@@ -1,1 +1,5 @@
 add_executable(foldtraverse 3_foldtraverse.cpp)
+add_executable(varexpressions 5_varexpressions.cpp)
+add_executable(varindices 6_varindices.cpp)
+add_executable(varclasstemplates 7_varclasstemplates.cpp)
+add_executable(varusing 8_varusing.cpp)
