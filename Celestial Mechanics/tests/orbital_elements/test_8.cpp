@@ -2,7 +2,6 @@
 #include "celestial_mechanics/orbital_elements/Elements.hpp"
 #include "celestial_mechanics/orbital_elements/ElementsConverter.hpp"
 #include <Core>
-#include <iostream>
 #include <numbers>
 
 
