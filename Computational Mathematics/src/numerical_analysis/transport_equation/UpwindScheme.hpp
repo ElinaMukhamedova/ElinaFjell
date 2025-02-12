@@ -11,9 +11,13 @@ struct Grid {
     static constexpr double L = 20;
     static constexpr double T = 18;
     static constexpr double h_x = 0.5;
+    static constexpr int N_x = 41;
 
     double Courant;
     double h_t;
 
-    Grid(double const& C) : Courant(C), h_t(C*h_x) {}
+    std::array<double, 41> initialCondition;
+
+    Grid(double const& C, std::array<double, 41> const& u0)
+        : Courant(C), h_t(C*h_x), initialCondition(u0) {}
 };
