@@ -22,13 +22,15 @@ Eigen::Matrix<double, 3, 3> R3(double const& phi) {
 
 double N(double const& x) {return x>=0 ? x : x + 2*std::numbers::pi;}
 
+namespace Orbit {
+
 CartesianElements convertKeplerianToCartesian(KeplerianElements const& el, double const mu) {
-    double const& inclination = el.inclination;
-    double const& ascendingNode = el.ascendingNode;
-    double const& semimajor = el.semimajor;
-    double const& eccentricity = el.eccentricity;
-    double const& argumentPeriapsis = el.argumentPeriapsis;
-    double const& trueAnomaly = el.trueAnomaly;
+    double const inclination = el.inclination;
+    double const ascendingNode = el.ascendingNode;
+    double const semimajor = el.semimajor;
+    double const eccentricity = el.eccentricity;
+    double const argumentPeriapsis = el.argumentPeriapsis;
+    double const trueAnomaly = el.trueAnomaly;
 
     double const cos_trueAnomaly = std::cos(trueAnomaly);
     double const sin_trueAnomaly = std::sin(trueAnomaly);
@@ -48,8 +50,8 @@ CartesianElements convertKeplerianToCartesian(KeplerianElements const& el, doubl
 }
 
 KeplerianElements convertCartesianToKeplerian(CartesianElements const& el, double const mu) {
-    Eigen::Vector3d position = el.position;
-    Eigen::Vector3d velocity = el.velocity;
+    const Eigen::Vector3d& position = el.position;
+    const Eigen::Vector3d& velocity = el.velocity;
     Eigen::Vector3d const x{1, 0, 0};
     Eigen::Vector3d const y{0, 1, 0};
     Eigen::Vector3d const z{0, 0, 1};
@@ -77,3 +79,5 @@ KeplerianElements convertCartesianToKeplerian(CartesianElements const& el, doubl
     return KeplerianElements{inclination, ascendingNode, semimajor,
                                 eccentricity, argumentPeriapsis, trueAnomaly};
 }
+
+};

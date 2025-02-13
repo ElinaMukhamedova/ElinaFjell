@@ -10,3 +10,6 @@ target_link_libraries(run_J2 celestial_mechanics gtest gtest_main sofa Eigen)
 
 enable_testing()
 add_subdirectory(tests)
+
+add_executable(oscillator oscillator.cpp)
+target_link_libraries(oscillator celestial_mechanics)
