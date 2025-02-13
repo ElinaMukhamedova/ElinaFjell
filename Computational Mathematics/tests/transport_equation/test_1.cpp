@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "numerical_analysis/transport_equation/UpwindScheme.hpp"
+#include "numerical_analysis/transport_equation/Grid.hpp"
 #include <array>
 #include <iostream>
 

@@ -7,3 +7,6 @@ add_subdirectory(third_party)
 
 enable_testing()
 add_subdirectory(tests)
+
+add_executable(TransportEquation TransportEquation.cpp)
+target_link_libraries(TransportEquation numerical_analysis)
