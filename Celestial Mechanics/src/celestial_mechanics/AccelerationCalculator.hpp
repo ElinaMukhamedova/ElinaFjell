@@ -17,6 +17,7 @@ class ForceCalculator{
             double mass;
         };
 
+        template<typename Params>
         Eigen::Vector3d calcAcceleration(const Eigen::Vector3d& positionECI, const Eigen::Vector3d& velocityECI,
                                             const double mass, const SatelliteParameters& satParams,
                                                 const Params& params){
