@@ -36,13 +36,13 @@ class Satellite {
             Time<Scale::TDB> tdb;
         };
 
-        Parameters params{referenceSystemConverter_.GCRS2ITRS(), timeConverter_.convert<Scale::TDB>(StateAndArg.arg)};
-
-        template<typename Params>
         State evaluate(StateAndArg const& stateAndArg) const {
+
+            Parameters params{referenceSystemConverter_.GCRS2ITRS(), timeConverter_.convert<Scale::TDB>(stateAndArg.arg)};
+
             Eigen::Vector<double, 3> const positionECI{stateAndArg.state(0), stateAndArg.state(1), stateAndArg.state(2)};
             Eigen::Vector<double, 3> const velocityECI{stateAndArg.state(3), stateAndArg.state(4), stateAndArg.state(5)};
-            Eigen::Vector<double, 3> const acceleration = forceCalculator_.calcAcceleration(positionECI, velocityECI,
+            Eigen::Vector<double, 3> const acceleration = forceCalculator_.calcAcceleration<Parameters>(positionECI, velocityECI,
                                                                                             forceCalculator_.SatelliteParameters.mass,
                                                                                             forceCalculator_.SatelliteParameters,
                                                                                             params);

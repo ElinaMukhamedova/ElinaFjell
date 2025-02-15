@@ -20,9 +20,9 @@ struct Grid {
 
     std::array<double, 41> initialCondition;
 
-    Grid(double const& C, std::array<double, 41> const& u0)
+    Grid(double const C, std::array<double, 41> const& u0)
         : Courant(C), h_t(C*h_x), initialCondition(u0) {}
     
-    std::array<double, 41> solveUpwind(double const& t);
+    std::array<double, 41> solveUpwind(double const t);
 };
 

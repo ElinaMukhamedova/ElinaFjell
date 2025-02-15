@@ -3,7 +3,7 @@
 #include <array>
 
 
-std::array<double, 41> Grid::solveUpwind(double const& t) {
+std::array<double, 41> Grid::solveUpwind(double const t) {
     double currentTime = 0;
     std::array<double, 41> state = initialCondition;
     while (currentTime < t) {
@@ -13,4 +13,5 @@ std::array<double, 41> Grid::solveUpwind(double const& t) {
         state[0] = state[N_x-1];
         currentTime += h_t;
     }
+    return state;
 }
