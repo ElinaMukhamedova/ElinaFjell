@@ -12,19 +12,19 @@ class SolarRadiationPressure {
     double TSI_;
 
     public:
-        SolarRadiationPressure(Eternal& eternal, double TSI = 1361)
+        SolarRadiationPressure(Eternal const& eternal, double const TSI = 1361)
             : eternal_(eternal), TSI_(TSI) {}
 
         struct SatelliteParameters {
             double S_srp;
         };
 
-        int scalarCylindricalShadow(CelestialBody Caster, double rCaster, Eigen::Vector3d SunSatellite, Time<Scale::TDB> tdb);
+        int scalarCylindricalShadow(CelestialBody Caster, double rCaster, Eigen::Vector3d SunSatellite, Time<Scale::TDB> tdb) const;
 
         template<typename Params>
         Eigen::Vector3d calcAcceleration(const Eigen::Vector3d& positionECI, const Eigen::Vector3d& velocityECI,
                                             const double mass, const SatelliteParameters& satParams,
-                                                const Params& params){
+                                                const Params& params) const {
 
             Time<Scale::TDB> tdb = params.tdb;
             

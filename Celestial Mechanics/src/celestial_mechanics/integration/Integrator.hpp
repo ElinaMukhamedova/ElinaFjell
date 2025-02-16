@@ -6,13 +6,14 @@
 template<typename Tableau, typename RHS>
 std::vector<typename RHS::StateAndArg> integrate (
     typename RHS::State const& initialState,
+    typename RHS::ArgType const& beginTime,
     typename RHS::ArgType const& endTime,
     double step,
     RHS const& rhs) {
 
         std::vector<typename RHS::StateAndArg> solution;
 
-        typename RHS::ArgType currentTime = 0;
+        typename RHS::ArgType currentTime = beginTime;
         typename RHS::State currentState = initialState;
         typename RHS::State nextState;
         typename RHS::StateAndArg currentStateAndArg;
@@ -39,7 +40,7 @@ std::vector<typename RHS::StateAndArg> integrate (
             for (std::size_t i = 0; i < Tableau::stages; ++i)
                 nextState += step * Tableau::bString[i] * Ks[i];
             
-            currentTime += step;
+            currentTime = currentTime + step;
             currentState = nextState;
         }
         return solution;

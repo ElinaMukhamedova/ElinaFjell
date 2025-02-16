@@ -20,12 +20,12 @@ class ForceCalculator{
         template<typename Params>
         Eigen::Vector3d calcAcceleration(const Eigen::Vector3d& positionECI, const Eigen::Vector3d& velocityECI,
                                             const double mass, const SatelliteParameters& satParams,
-                                                const Params& params){
+                                                const Params& params) const {
 
-            const auto sum = [&positionECI, &velocityECI, &mass, &satParams, &params]
+            const auto sum = [this, &positionECI, &velocityECI, &mass, &satParams, &params]
                 (const auto& ... forces) {
-                    if constexpr (std::tuple_size_v<forces> != 0) {
-                        return (forces.calcAcceleration(positionECI, velocityECI, mass, satParams, params) + ...);
+                    if constexpr (std::tuple_size_v<std::tuple<OtherForces...>> != 0) {
+                        return (forces.template calcAcceleration<Params>(positionECI, velocityECI, mass, satParams, params) + ...);
                     } else {return Eigen::Vector3d::Zero();}
                 };
             

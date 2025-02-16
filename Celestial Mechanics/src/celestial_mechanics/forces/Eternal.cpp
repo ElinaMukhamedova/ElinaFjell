@@ -7,7 +7,7 @@ double Eternal::AU() {
             return au;
 }
 
-Eigen::Vector3d Eternal::vector(Time<Scale::TDB> tdb, CelestialBody Centre, CelestialBody Target) {
+Eigen::Vector3d Eternal::vector(Time<Scale::TDB> tdb, CelestialBody Centre, CelestialBody Target) const {
             double jdInt = tdb.jdInt(); double jdFrac = tdb.jdFrac();
 
             double PositionKM[3];

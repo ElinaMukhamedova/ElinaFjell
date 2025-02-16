@@ -3,7 +3,7 @@
 
 int SolarRadiationPressure::scalarCylindricalShadow(CelestialBody Caster, double rCaster,
                                                         Eigen::Vector3d SunSatellite,
-                                                            Time<Scale::TDB> tdb) {
+                                                            Time<Scale::TDB> tdb) const {
             
     Eigen::Vector3d SunCaster = eternal_.vector(tdb, CelestialBody::Sun, Caster);
     Eigen::Vector3d CasterSun = -SunCaster;

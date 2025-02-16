@@ -16,7 +16,7 @@ class ReferenceSystemConverter {
     public:
         ReferenceSystemConverter (const EOPContainer& EOPcontainer) : EOPcontainer_(EOPcontainer), timeConverter_(EOPcontainer_) {}
         
-        Eigen::Quaternion<double> GCRS2ITRS(const Time<Scale::TT>& tt) {
+        Eigen::Quaternion<double> GCRS2ITRS(const Time<Scale::TT>& tt) const {
             const auto utc = timeConverter_.convert<Scale::UTC>(tt);
             double utcMJD = utc.mjd();
 

@@ -13,3 +13,6 @@ add_subdirectory(tests)
 
 add_executable(oscillator oscillator.cpp)
 target_link_libraries(oscillator celestial_mechanics)
+
+add_executable(orbit_Satellite orbit_Satellite.cpp)
+target_link_libraries(orbit_Satellite celestial_mechanics)

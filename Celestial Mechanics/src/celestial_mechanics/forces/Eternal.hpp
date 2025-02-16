@@ -27,5 +27,5 @@ class Eternal {
 
         double AU();
 
-        Eigen::Vector3d vector(Time<Scale::TDB> tdb, CelestialBody Centre, CelestialBody Target);
+        Eigen::Vector3d vector(Time<Scale::TDB> tdb, CelestialBody Centre, CelestialBody Target) const;
 };
