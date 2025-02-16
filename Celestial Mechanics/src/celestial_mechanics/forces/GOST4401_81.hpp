@@ -1,13 +1,13 @@
 #pragma once
 
-#include <vector>
+#include <array>
 #include "celestial_mechanics/Interpolation.hpp"
 
 class GOST4401_81 {
-
     public:
+        constexpr static unsigned int N = 606;
 
-        std::vector<double> heights_ = {
+        static constexpr std::array<double, N> heights = {
             80000,   80500,   81000,   81500,   82000,   82500,   83000,   83500,   84000,   84500,   85000,   85500,
             86000,   86500,   87000,   87500,   88000,   88500,   89000,   89500,   90000,   90500,   91000,   91500,
             92000,   92500,   93000,   93500,   94000,   94500,   95000,   96000,   97000,   98000,   99000,   100000,
@@ -49,7 +49,7 @@ class GOST4401_81 {
             1100000, 1105000, 1110000, 1115000, 1120000, 1125000, 1130000, 1135000, 1140000, 1145000, 1150000, 1155000,
             1160000, 1165000, 1170000, 1175000, 1180000, 1185000, 1190000, 1195000, 1200000};
 
-        std::vector<double> densities_ = {
+        static constexpr std::array<double, N> densities = {
             1.8458e-05,  1.70542e-05, 1.57493e-05, 1.45408e-05, 1.34175e-05, 1.23781e-05, 1.14145e-05, 1.05216e-05,
             9.69458e-06, 8.92878e-06, 8.22001e-06, 7.56427e-06, 6.95782e-06, 6.37469e-06, 5.83212e-06, 5.33476e-06,
             4.88072e-06, 4.4645e-06,  4.0845e-06,  3.73686e-06, 3.41817e-06, 3.12745e-06, 2.86108e-06, 2.61757e-06,
@@ -110,8 +110,9 @@ class GOST4401_81 {
             2.6017e-15,  2.56259e-15, 2.52423e-15, 4.48661e-15, 2.44972e-15, 2.41357e-15, 2.37814e-15, 2.34342e-15,
             2.30942e-15, 2.27613e-15, 2.24353e-15, 3.21163e-15, 2.18042e-15, 2.1499e-15,  2.12006e-15, 2.09089e-15,
             2.0624e-15,  2.03457e-15, 2.0074e-15,  1.98089e-15, 1.95503e-15};
+        
+        //Interpolant<double, double> interpolant_{heights_, densities_};
 
-        Interpolant<double, double> interpolant_{heights_, densities_};
-
-        double density(double height) const;
+        constexpr static double minHeight = heights[0];
+        constexpr static double maxHeight = heights[N - 1];
 };

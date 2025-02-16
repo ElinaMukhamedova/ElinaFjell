@@ -25,13 +25,13 @@ int main() {
     std::string const FILE_PATH = __FILE__;
     std::string const DIR_PATH = FILE_PATH.substr(0, FILE_PATH.size() - 19);
 
-    double satelliteMass = 1;
+    double satelliteMass = 10;
     double S_srp = 1;
-    //double S_drag = 1;
-    //double C_drag = 1;
+    double S_drag = 1;
+    double C_drag = 1;
 
-    Satellite<EarthGravity>::State const initialState{6800e3, 0, 0, 0, 0, 07656.2};
-    Time<Scale::TT> const beginTime = Time<Scale::TT>::fromMJD(58900);
+    Satellite<EarthGravity>::State const initialState{6500e3, 0, 0, 0, 0, 7656.2};
+    Time<Scale::TT> const beginTime = Time<Scale::TT>::fromMJD(58000);
     Time<Scale::TT> const endTime = Time<Scale::TT>::fromMJD(59000);
 
     DutContainer const dutContainer = DutContainer::buildFromFile(resourcesPath() / "earth_rotation.csv");
@@ -44,14 +44,15 @@ int main() {
     Eternal eternal = Eternal(path);
     SolarRadiationPressure const solarRadiationPressure{eternal};
     typename SolarRadiationPressure::SatelliteParameters solarRadiationPressureParameters{S_srp};
-    //GOST4401_81 gost{};
-    //AtmosphericDrag atmosphericDrag{gost};
-
-    Satellite<EarthGravity> satelliteRHS{dutContainer, EOPcontainer, gravity, satelliteMass, gravityParameters};
     
-    auto solution = integrate<RK4Tableau, Satellite<EarthGravity>>(initialState, beginTime, endTime, 0.1, satelliteRHS);
+    AtmosphericDrag atmosphericDrag{};
+    typename AtmosphericDrag::SatelliteParameters atmosphericDragParameters{S_drag, C_drag};
 
-    std::ofstream fileRK4(DIR_PATH + "results/" + "satellite_RK4" + ".csv");
+    Satellite<EarthGravity, SolarRadiationPressure, AtmosphericDrag> satelliteRHS{dutContainer, EOPcontainer, gravity, solarRadiationPressure, atmosphericDrag, satelliteMass, gravityParameters, solarRadiationPressureParameters, atmosphericDragParameters};
+    
+    auto solution = integrate<RK4Tableau, Satellite<EarthGravity, SolarRadiationPressure, AtmosphericDrag>>(initialState, beginTime, endTime, 0.1, satelliteRHS);
+
+    std::ofstream fileRK4(DIR_PATH + "results/" + "gravity_srp_drag" + ".csv");
     fileRK4 << "t,x,y,z\n";
     for (const auto stateAndTime: solution) {
         fileRK4 << std::setprecision(15) << stateAndTime.arg.mjd() << ',' 
