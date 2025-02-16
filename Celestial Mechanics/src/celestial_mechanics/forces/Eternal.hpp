@@ -12,9 +12,10 @@ enum class CelestialBody{Mercury = 1, Venus = 2, Earth = 399,
 
 class Eternal {
     t_calcephbin *peph;
+    std::string pathEphemerides_;
     
     public:
-        Eternal(const std::string& pathEphemerides) : peph{nullptr} {
+        Eternal(const std::string& pathEphemerides) : peph{nullptr}, pathEphemerides_(pathEphemerides) {
             peph = calceph_open(pathEphemerides.c_str());
             if (!peph){
                 throw Exception("Can't open the ephemerides file!");
@@ -24,6 +25,10 @@ class Eternal {
         ~Eternal(){
             calceph_close(peph);
         }
+
+        std::string pathEphemerides() const;
+
+        Eternal(Eternal const& eternal);
 
         double AU();
 

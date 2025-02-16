@@ -1,5 +1,15 @@
 #include "Eternal.hpp"
 
+std::string Eternal::pathEphemerides() const {return pathEphemerides_;}
+
+Eternal::Eternal(Eternal const& eternal)
+    :   peph{nullptr}, pathEphemerides_(eternal.pathEphemerides()) {
+        peph = calceph_open(pathEphemerides_.c_str());
+            if (!peph){
+                throw Exception("Can't open the ephemerides file!");
+            }
+    }
+
 double Eternal::AU() {
     double au;
             if (calceph_getconstant(peph, "AU", &au) == 0)

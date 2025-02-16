@@ -26,23 +26,24 @@ int main() {
     std::string const DIR_PATH = FILE_PATH.substr(0, FILE_PATH.size() - 19);
 
     double satelliteMass = 1;
-    //double S_srp = 1;
+    double S_srp = 1;
     //double S_drag = 1;
     //double C_drag = 1;
 
-    Satellite<EarthGravity>::State const initialState{6800e3, 0, 0, 0, 0, 7656.2};
-    Time<Scale::TT> const beginTime = Time<Scale::TT>::fromMJD(58739);
-    Time<Scale::TT> const endTime = Time<Scale::TT>::fromMJD(58847);
+    Satellite<EarthGravity>::State const initialState{6800e3, 0, 0, 0, 0, 07656.2};
+    Time<Scale::TT> const beginTime = Time<Scale::TT>::fromMJD(58900);
+    Time<Scale::TT> const endTime = Time<Scale::TT>::fromMJD(59000);
 
     DutContainer const dutContainer = DutContainer::buildFromFile(resourcesPath() / "earth_rotation.csv");
     EOPContainer const EOPcontainer = EOPContainer::buildFromFile(resourcesPath() / "earth_rotation.csv");
     EarthGravity const gravity{resourcesPath() / "gravity", 100, 100};
     typename EarthGravity::SatelliteParameters gravityParameters{};
 
-    //std::filesystem::path const pathEphemerides = resourcesPath() / "de405.bin";
-    //Eternal const eternal = Eternal(pathEphemerides.string());
-    //SolarRadiationPressure const solarRadiationPressure{eternal};
-    //typename SolarRadiationPressure::SatelliteParameters solarRadiationPressureParameters{S_srp};
+    std::filesystem::path const pathEphemerides = resourcesPath() / "de405.bin";
+    std::string path = pathEphemerides.string();
+    Eternal eternal = Eternal(path);
+    SolarRadiationPressure const solarRadiationPressure{eternal};
+    typename SolarRadiationPressure::SatelliteParameters solarRadiationPressureParameters{S_srp};
     //GOST4401_81 gost{};
     //AtmosphericDrag atmosphericDrag{gost};
 
