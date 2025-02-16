@@ -30,9 +30,9 @@ int main() {
     double S_drag = 1;
     double C_drag = 1;
 
-    Satellite<EarthGravity>::State const initialState{6500e3, 0, 0, 0, 0, 7656.2};
-    Time<Scale::TT> const beginTime = Time<Scale::TT>::fromMJD(58000);
-    Time<Scale::TT> const endTime = Time<Scale::TT>::fromMJD(59000);
+    Satellite<EarthGravity>::State const initialState{6800e3, 0, 0, 0, 0, 7656.2};
+    Time<Scale::TT> const beginTime = Time<Scale::TT>::fromMJD(58777);
+    Time<Scale::TT> const endTime = Time<Scale::TT>::fromMJD(58778);
 
     DutContainer const dutContainer = DutContainer::buildFromFile(resourcesPath() / "earth_rotation.csv");
     EOPContainer const EOPcontainer = EOPContainer::buildFromFile(resourcesPath() / "earth_rotation.csv");
@@ -50,13 +50,16 @@ int main() {
 
     Satellite<EarthGravity, SolarRadiationPressure, AtmosphericDrag> satelliteRHS{dutContainer, EOPcontainer, gravity, solarRadiationPressure, atmosphericDrag, satelliteMass, gravityParameters, solarRadiationPressureParameters, atmosphericDragParameters};
     
-    auto solution = integrate<RK4Tableau, Satellite<EarthGravity, SolarRadiationPressure, AtmosphericDrag>>(initialState, beginTime, endTime, 0.1, satelliteRHS);
+    auto solution = integrate<RK4Tableau, Satellite<EarthGravity, SolarRadiationPressure, AtmosphericDrag>>(initialState, beginTime, endTime, 5e-4, satelliteRHS);
 
     std::ofstream fileRK4(DIR_PATH + "results/" + "gravity_srp_drag" + ".csv");
-    fileRK4 << "t,x,y,z\n";
+    fileRK4 << "t,x,y,z,r\n";
     for (const auto stateAndTime: solution) {
+        Eigen::Vector3d position = {stateAndTime.state(0), stateAndTime.state(1), stateAndTime.state(2)};
+        double r = position.norm();
         fileRK4 << std::setprecision(15) << stateAndTime.arg.mjd() << ',' 
-                << stateAndTime.state(0) << ',' << stateAndTime.state(1) << ',' << stateAndTime.state(2) << '\n';
+                << position(0) << ',' << position(1) << ',' << position(2) << ','
+                << r << '\n';
     }
     fileRK4.close();
 
