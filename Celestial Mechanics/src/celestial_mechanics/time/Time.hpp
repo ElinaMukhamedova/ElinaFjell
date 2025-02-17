@@ -112,19 +112,21 @@ double Time<scale>::mjd() const noexcept {
 
 template<Scale scale>
 double operator-(const Time<scale>& first, const Time<scale>& second) noexcept {
-    double delta_int = first.jdInt() - second.jdInt();
-    double delta_frac = first.jdFrac() - second.jdFrac();
-    return delta_int + delta_frac;
+    double const delta_int = first.jdInt() - second.jdInt();
+    double const delta_frac = first.jdFrac() - second.jdFrac();
+    double const res1 = delta_int * 86400;
+    double const res2 = delta_frac * 86400;
+    return res1 + res2;
 }
 
 template<Scale scale>
 Time<scale> operator-(const Time<scale>& point, double delta) noexcept {
-    return Time<scale>::fromMJD(point.mjd() - delta);
+    return Time<scale>::fromMJD(point.mjd() - delta / 86400);
 }
 
 template<Scale scale>
 Time<scale> operator+(const Time<scale>& point, double delta) noexcept {
     double delta_int;
-    double delta_frac = std::modf(delta, &delta_int);
+    double delta_frac = std::modf(delta / 86400, &delta_int);
     return Time<scale>(point.jdInt() + delta_int, point.jdFrac() + delta_frac);
 }

@@ -16,3 +16,9 @@ target_link_libraries(oscillator celestial_mechanics)
 
 add_executable(orbit_Satellite orbit_Satellite.cpp)
 target_link_libraries(orbit_Satellite celestial_mechanics)
+
+add_executable(orbit_EarthGravity orbit_EarthGravity.cpp)
+target_link_libraries(orbit_EarthGravity celestial_mechanics)
+
+add_executable(orbit_gravity_drag orbit_gravity_drag.cpp)
+target_link_libraries(orbit_gravity_drag celestial_mechanics)

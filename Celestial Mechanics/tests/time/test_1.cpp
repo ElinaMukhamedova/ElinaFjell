@@ -81,10 +81,10 @@ TEST_F(TimeTest, comparisonWorks) {
 TEST_F(TimeTest, operatorsWork) {
     const auto JD = Time<Scale::UT1>::fromJD(jd);
     const auto JD_2 = Time<Scale::UT1>::fromJD(jd_2);
-    EXPECT_NEAR(JD_2 - JD, 0.25, 1e-12);
-    EXPECT_TRUE(JD + 0.25 == JD_2);
-    EXPECT_TRUE(std::abs((JD_2 - 0.25) - JD) <= 1e-6);
-    EXPECT_TRUE(JD_2 - 0.25 == JD);
+    EXPECT_NEAR(JD_2 - JD, 0.25 * 86400, 1e-12);
+    EXPECT_TRUE(JD + 0.25 * 86400 == JD_2);
+    EXPECT_TRUE(std::abs((JD_2 - 0.25 * 86400) - JD) <= 1e-6);
+    EXPECT_TRUE(JD_2 - 0.25 * 86400 == JD);
 }
 
 TEST(jdFracTest, AbsoluteNotGreaterThanOneHalf) {
