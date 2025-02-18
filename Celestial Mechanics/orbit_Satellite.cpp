@@ -26,13 +26,13 @@ int main() {
     std::string const DIR_PATH = FILE_PATH.substr(0, FILE_PATH.size() - 19);
 
     double satelliteMass = 100;
-    double S_srp = 1;
-    double S_drag = 0;
-    double C_drag = 0;
+    double S_srp = 0;
+    double S_drag = 100;
+    double C_drag = 2.2;
 
     Satellite<EarthGravity>::State const initialState{6800e3, 0, 0, 0, 0, 7656.2};
     Time<Scale::TT> const beginTime = Time<Scale::TT>::fromMJD(58777);
-    Time<Scale::TT> const endTime = Time<Scale::TT>::fromMJD(58807);
+    Time<Scale::TT> const endTime = Time<Scale::TT>::fromMJD(58780);
 
     DutContainer const dutContainer = DutContainer::buildFromFile(resourcesPath() / "earth_rotation.csv");
     EOPContainer const EOPcontainer = EOPContainer::buildFromFile(resourcesPath() / "earth_rotation.csv");
