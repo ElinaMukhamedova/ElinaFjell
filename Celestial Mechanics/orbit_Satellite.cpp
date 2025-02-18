@@ -26,7 +26,7 @@ int main() {
     std::string const DIR_PATH = FILE_PATH.substr(0, FILE_PATH.size() - 19);
 
     double satelliteMass = 100;
-    double S_srp = 0;
+    double S_srp = 1;
     double S_drag = 0;
     double C_drag = 0;
 

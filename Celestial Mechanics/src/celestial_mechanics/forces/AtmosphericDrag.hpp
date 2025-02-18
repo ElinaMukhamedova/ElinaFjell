@@ -5,7 +5,6 @@
 #include <GeographicLib/Geocentric.hpp>
 #include <math.h>
 #include "GOST4401_81.hpp"
-#include <iostream>
 
 class AtmosphericDrag {
     public:
@@ -32,12 +31,14 @@ class AtmosphericDrag {
             Earth.Reverse(posECEF(0), posECEF(1), posECEF(2), latitude_degrees, longitude_degrees, height_metres);
             
             double rho;
+
             if (height_metres < GOST4401_81::minHeight) {
                 std::cout << "Satellite has fallen!\n";
                 throw Exception("Requested point is out of bounds to Interpolant");
             }
-            if (height_metres > GOST4401_81::maxHeight)
+            if (height_metres > GOST4401_81::maxHeight) {
                 rho = 0;
+            }
             else {
                 auto iter = std::lower_bound(GOST4401_81::heights.begin(), GOST4401_81::heights.end(), height_metres);
                 int index = iter - GOST4401_81::heights.begin();
@@ -52,11 +53,11 @@ class AtmosphericDrag {
                 rho = slope * (height_metres - a) + value_a;
             }
 
-            
-
             double v2 = (velECEF - rotationVelocity).squaredNorm();
             Eigen::Vector3d n = -velECEF.normalized();
             Eigen::Vector3d accECEF = (0.5 * rho * v2 * satParams.C_drag * satParams.S_drag / mass) * n;
+
+            Eigen::Vector3d const acc = eci2ecef.conjugate()._transformVector(accECEF);
 
             return eci2ecef.conjugate()._transformVector(accECEF);
         }

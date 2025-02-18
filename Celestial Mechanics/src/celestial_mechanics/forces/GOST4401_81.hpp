@@ -5,7 +5,7 @@
 
 class GOST4401_81 {
     public:
-        constexpr static unsigned int N = 606;
+        constexpr static unsigned int N = 477;
 
         static constexpr std::array<double, N> heights = {
             80000,   80500,   81000,   81500,   82000,   82500,   83000,   83500,   84000,   84500,   85000,   85500,
