@@ -29,7 +29,7 @@ int main() {
 
     Satellite<EarthGravity>::State const initialState{6800e3, 0, 0, 0, 0, 7656.2};
     Time<Scale::TT> const beginTime = Time<Scale::TT>::fromMJD(58777);
-    Time<Scale::TT> const endTime = Time<Scale::TT>::fromMJD(58830);
+    Time<Scale::TT> const endTime = Time<Scale::TT>::fromMJD(58777.0006);
 
     DutContainer const dutContainer = DutContainer::buildFromFile(resourcesPath() / "earth_rotation.csv");
     EOPContainer const EOPcontainer = EOPContainer::buildFromFile(resourcesPath() / "earth_rotation.csv");

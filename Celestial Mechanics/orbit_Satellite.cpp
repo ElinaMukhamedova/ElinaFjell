@@ -25,32 +25,34 @@ int main() {
     std::string const FILE_PATH = __FILE__;
     std::string const DIR_PATH = FILE_PATH.substr(0, FILE_PATH.size() - 19);
 
-    double satelliteMass = 100;
-    double S_srp = 0;
-    double S_drag = 100;
-    double C_drag = 2.2;
+    double const satelliteMass = 100;
+    double const S_srp = 0;
+    double const S_drag = 1;
+    double const C_drag = 2.2;
 
     Satellite<EarthGravity>::State const initialState{6800e3, 0, 0, 0, 0, 7656.2};
     Time<Scale::TT> const beginTime = Time<Scale::TT>::fromMJD(58777);
-    Time<Scale::TT> const endTime = Time<Scale::TT>::fromMJD(58780);
+    Time<Scale::TT> const endTime = Time<Scale::TT>::fromMJD(58777.006);
 
     DutContainer const dutContainer = DutContainer::buildFromFile(resourcesPath() / "earth_rotation.csv");
     EOPContainer const EOPcontainer = EOPContainer::buildFromFile(resourcesPath() / "earth_rotation.csv");
     EarthGravity const gravity{resourcesPath() / "gravity", 2, 2};
     typename EarthGravity::SatelliteParameters gravityParameters{};
 
+    AtmosphericDrag atmosphericDrag{};
+    typename AtmosphericDrag::SatelliteParameters atmosphericDragParameters{S_drag, C_drag};
+
     std::filesystem::path const pathEphemerides = resourcesPath() / "de405.bin";
     std::string path = pathEphemerides.string();
     Eternal eternal = Eternal(path);
     SolarRadiationPressure const solarRadiationPressure{eternal};
     typename SolarRadiationPressure::SatelliteParameters solarRadiationPressureParameters{S_srp};
-    
-    AtmosphericDrag atmosphericDrag{};
-    typename AtmosphericDrag::SatelliteParameters atmosphericDragParameters{S_drag, C_drag};
 
-    Satellite<EarthGravity, SolarRadiationPressure, AtmosphericDrag> satelliteRHS{dutContainer, EOPcontainer, gravity, solarRadiationPressure, atmosphericDrag, satelliteMass, gravityParameters, solarRadiationPressureParameters, atmosphericDragParameters};
+
+
+    Satellite<EarthGravity, AtmosphericDrag, SolarRadiationPressure> satelliteRHS{dutContainer, EOPcontainer, gravity, atmosphericDrag, solarRadiationPressure, satelliteMass, gravityParameters, atmosphericDragParameters, solarRadiationPressureParameters};
     
-    auto solution = integrate<RK4Tableau, Satellite<EarthGravity, SolarRadiationPressure, AtmosphericDrag>>(initialState, beginTime, endTime, 50, satelliteRHS);
+    auto solution = integrate<RK4Tableau, Satellite<EarthGravity, AtmosphericDrag, SolarRadiationPressure>>(initialState, beginTime, endTime, 50, satelliteRHS);
 
     std::ofstream fileRK4(DIR_PATH + "results/" + "gravity_srp_drag" + ".csv");
     fileRK4 << "t,x,y,z,r\n";
