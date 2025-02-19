@@ -2,7 +2,6 @@
 
 #include <tuple>
 #include <Core>
-#include <iostream>
 
 template<typename EarthGrav, typename ... OtherForces>
 class ForceCalculator{
@@ -23,24 +22,16 @@ class ForceCalculator{
                                             const double mass, const SatelliteParameters& satParams,
                                                 const Params& params) const {
 
-            const auto sum = [this, &positionECI, &velocityECI, &mass, &satParams, &params]
+            const auto sum = [&positionECI, &velocityECI, &mass, &satParams, &params]
                 (const auto& ... forces) {
                     if constexpr (std::tuple_size_v<std::tuple<OtherForces...>> != 0) {
-                        Eigen::Vector3d const forcesAcc = (... + forces.template calcAcceleration<Params>(positionECI, velocityECI, mass, satParams, params));
+                        Eigen::Vector3d const forcesAcc = (forces.template calcAcceleration<Params>(positionECI, velocityECI, mass, satParams, params) + ...);
                         return forcesAcc;
                     } else {return Eigen::Vector3d::Zero();}
                 };
-            Eigen::Vector3d const gravityAcc = EarthGravity_.calcAcceleration(positionECI, velocityECI, mass, satParams, params);
-            Eigen::Vector3d const otherForcesAcc = std::apply(sum, forces_);
+            Eigen::Vector3d const gravityAcc{EarthGravity_.calcAcceleration(positionECI, velocityECI, mass, satParams, params)};
+            Eigen::Vector3d const otherForcesAcc{std::apply(sum, forces_)};
             Eigen::Vector3d const acceleration = gravityAcc + otherForcesAcc;
-            std::cout << gravityAcc << '\n';
-            std::cout << '\n';
-            std::cout << otherForcesAcc << '\n';
-            std::cout << '\n';
-            std::cout << acceleration << '\n';
-            std::cout << '\n';
-            std::cout << '\n';
-            std::cout << '\n';
             return acceleration;
         }
 };

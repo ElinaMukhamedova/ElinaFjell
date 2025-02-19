@@ -10,8 +10,6 @@
 #include "celestial_mechanics/time/TimeConverter.hpp"
 #include "celestial_mechanics/time/DutContainer.hpp"
 
-#include <iostream>
-
 
 template<typename EarthGrav, typename ... OtherForces>
 class Satellite {
@@ -58,9 +56,6 @@ class Satellite {
                                                                                             satelliteParameters_.mass,
                                                                                             satelliteParameters_,
                                                                                             params);
-            //std::cout << Eigen::Vector<double, 6>{velocityECI(0), velocityECI(1), velocityECI(2),
-            //                acceleration(0), acceleration(1), acceleration(2)} << '\n';
-            //std::cout << '\n';
             return Eigen::Vector<double, 6>{velocityECI(0), velocityECI(1), velocityECI(2),
                                             acceleration(0), acceleration(1), acceleration(2)};
         }
