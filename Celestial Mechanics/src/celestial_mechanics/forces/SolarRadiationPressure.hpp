@@ -37,12 +37,12 @@ class SolarRadiationPressure {
             Eigen::Vector3d EarthSatellite = positionECI;
             Eigen::Vector3d SunSatellite = SunEarth + EarthSatellite;
 
-            int shadow = scalarCylindricalShadow(CelestialBody::Earth, rEarth, SunSatellite, tdb);
+            double shadow = scalarCylindricalShadow(CelestialBody::Earth, rEarth, SunSatellite, tdb);
             shadow *= scalarCylindricalShadow(CelestialBody::Moon, rMoon, SunSatellite, tdb);
 
             Eigen::Vector3d n = SunSatellite.normalized();
             double SunSatelliteDistance = SunSatellite.norm();
-            Eigen::Vector3d j0 = TSI_ * std::pow(AU/SunSatelliteDistance, 2) * n;
+            Eigen::Vector3d j0 = TSI_ * AU * AU /SunSatelliteDistance / SunSatelliteDistance * n;
 
             Eigen::Vector3d F_srp = (shadow * satParams.S_srp / lightSpeed) * j0;
 

@@ -10,7 +10,7 @@ int SolarRadiationPressure::scalarCylindricalShadow(CelestialBody Caster, double
             
     Eigen::Vector3d CasterSatellite = CasterSun + SunSatellite;
 
-    int shadow = 1;
+    double shadow = 1;
     if (CasterSun.dot(CasterSatellite) <= 0) {
         double numerator = (CasterSun.cross(CasterSatellite)).norm();
         double denominator = CasterSun.norm();

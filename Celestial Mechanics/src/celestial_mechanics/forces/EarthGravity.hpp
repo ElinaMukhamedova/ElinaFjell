@@ -22,6 +22,8 @@ class EarthGravity{
         
         EarthGravity(EarthGravity const& gravity);
 
+        double gravitationalParameter() const;
+
         struct SatelliteParameters{};
 
         template<typename Params>

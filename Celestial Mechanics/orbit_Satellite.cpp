@@ -54,6 +54,8 @@ int main() {
     
     auto solution = integrate<RK4Tableau, Satellite<EarthGravity, AtmosphericDrag, SolarRadiationPressure>>(initialState, beginTime, endTime, 50, satelliteRHS);
 
+
+
     std::ofstream fileRK4(DIR_PATH + "results/" + "gravity_srp_drag" + ".csv");
     fileRK4 << "t,x,y,z,r\n";
     for (const auto stateAndTime: solution) {
