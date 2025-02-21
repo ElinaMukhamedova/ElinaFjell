@@ -20,5 +20,5 @@ target_link_libraries(orbit_Satellite celestial_mechanics)
 add_executable(orbit_noSRP orbit_noSRP.cpp)
 target_link_libraries(orbit_noSRP celestial_mechanics)
 
-add_executable(C20_firstOrder C20_firstOrder.cpp)
-target_link_libraries(C20_firstOrder celestial_mechanics)
+add_executable(Astana Astana.cpp)
+target_link_libraries(Astana celestial_mechanics)
