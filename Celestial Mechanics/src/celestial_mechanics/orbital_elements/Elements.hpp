@@ -13,6 +13,9 @@ struct KeplerianElements {
 
     double argumentPeriapsis;
     double trueAnomaly;
+
+    double focalParameter() const;
+    double argumentLatitude() const;
 };
 
 struct CartesianElements {
