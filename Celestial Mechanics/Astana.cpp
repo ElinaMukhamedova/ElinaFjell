@@ -111,7 +111,15 @@ double focalParameter(double const argumentLatitude, KeplerianElements const& in
 }
 
 double semimajor(double const argumentLatitude, KeplerianElements const& initialKeplerian, double const epsilon, double const mu) {
-    return focalParameter(argumentLatitude, initialKeplerian, epsilon, mu)/(1-initialKeplerian.eccentricity*initialKeplerian.eccentricity)+2*initialKeplerian.eccentricity/((1-initialKeplerian.eccentricity*initialKeplerian.eccentricity)*(1-initialKeplerian.eccentricity*initialKeplerian.eccentricity))*eccentricity(argumentLatitude, initialKeplerian, epsilon, mu);
+    double const p_bracket = (epsilon*std::sin(initialKeplerian.inclination)*std::sin(initialKeplerian.inclination)/(mu*initialKeplerian.focalParameter()))*(focalParameter_bracket(argumentLatitude, initialKeplerian) - focalParameter_bracket(initialKeplerian.argumentLatitude(), initialKeplerian));
+    double const e_bracket = (epsilon/(mu*initialKeplerian.focalParameter()*initialKeplerian.focalParameter()))*(eccentricity_bracket(argumentLatitude, initialKeplerian) - eccentricity_bracket(initialKeplerian.argumentLatitude(), initialKeplerian));
+    double const p_factor = 1/(1-initialKeplerian.eccentricity*initialKeplerian.eccentricity);
+    double const e_factor = 2*initialKeplerian.eccentricity*initialKeplerian.focalParameter()/((1-initialKeplerian.eccentricity*initialKeplerian.eccentricity)*(1-initialKeplerian.eccentricity*initialKeplerian.eccentricity));
+    return initialKeplerian.semimajor+p_factor*p_bracket+e_factor*e_bracket;
+}
+
+double semimajor_easy(double const argumentLatitude, KeplerianElements const& initialKeplerian, double const epsilon, double const mu) {
+    return focalParameter(argumentLatitude, initialKeplerian, epsilon, mu)/(1-eccentricity(argumentLatitude, initialKeplerian, epsilon, mu)*eccentricity(argumentLatitude, initialKeplerian, epsilon, mu));
 }
 
 int main() {
@@ -155,7 +163,7 @@ int main() {
     }
 
     std::ofstream file(DIR_PATH + "results/C20_firstOrder/" + "Astana" + ".csv");
-    file << "Astana_argumentLatitude,Astana_focalParameter,Astana_semimajor,Astana_eccentricity,Astana_argumentPeriapsis,Astana_inclination,Astana_ascendingNode,Astana_analytical_inclination,Astana_analytical_ascendingNode,Astana_analytical_argumentPeriapsis,Astana_analytical_eccentricity,Astana_analytical_focalParameter,Astana_analytical_semimajor\n";
+    file << "Astana_argumentLatitude,Astana_focalParameter,Astana_semimajor,Astana_eccentricity,Astana_argumentPeriapsis,Astana_inclination,Astana_ascendingNode,Astana_analytical_inclination,Astana_analytical_ascendingNode,Astana_analytical_argumentPeriapsis,Astana_analytical_eccentricity,Astana_analytical_focalParameter,Astana_analytical_semimajor,Astana_analytical_semimajor_easy\n";
     double previous = 0;
     double current;
     unsigned int k = 0;
@@ -178,7 +186,8 @@ int main() {
                 << argumentPeriapsis(current, initialKeplerian, epsilon, mu) << ','
                 << eccentricity(current, initialKeplerian, epsilon, mu) << ','
                 << focalParameter(current, initialKeplerian, epsilon, mu) << ','
-                << semimajor(current, initialKeplerian, epsilon, mu) << '\n';
+                << semimajor(current, initialKeplerian, epsilon, mu) << ','
+                << semimajor_easy(current, initialKeplerian, epsilon, mu) << '\n';
     }
     file.close();
 
