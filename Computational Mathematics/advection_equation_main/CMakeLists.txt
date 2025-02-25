@@ -1,0 +1,2 @@
+add_executable(AdvectionEquation AdvectionEquation.cpp)
+target_link_libraries(AdvectionEquation numerical_analysis)

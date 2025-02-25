@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "numerical_analysis/transport_equation/Grid.hpp"
+#include "numerical_analysis/advection_equation/Grid.hpp"
 #include <array>
 #include <iostream>
 
