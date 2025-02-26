@@ -33,5 +33,5 @@ def update(frame):
     return (line, line_analytical)
 
 anima = animation.FuncAnimation(fig=fig, func=update, frames=38, interval=500)
-anima.save(project_directpry_path+'/results/advection_equation/AdvectionEquation_2.gif', writer='pillow')
+anima.save(project_directpry_path+'/results/advection_equation/upwind_2.gif', writer='pillow')
 plt.show()

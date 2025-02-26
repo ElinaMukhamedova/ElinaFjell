@@ -10,10 +10,10 @@
 ///        u(0, t) = u(L, t),   0 <= t <= T                 ///
 ///////////////////////////////////////////////////////////////
 
-std::vector<std::array<double, 41>> Grid::solveUpwind() const{
+std::vector<std::array<double, Grid::N_x>> Grid::solveUpwind() const {
     double currentTime = 0;
-    std::vector<std::array<double, 41>> solution{initialCondition};
-    std::array<double, 41> state = initialCondition;
+    std::vector<std::array<double, N_x>> solution{initialCondition};
+    std::array<double, N_x> state = initialCondition;
     while (currentTime <= T) {
         currentTime += h_t;
         for (int i = N_x - 1; i > 0; --i) {

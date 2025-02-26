@@ -7,7 +7,7 @@ import os
 advection_equation_main_directory_path = os.getcwd()
 project_directpry_path = os.path.dirname(advection_equation_main_directory_path)
 
-with open('resources_for_animation/upwind_scheme/1_withoutTime.csv', newline = '') as file:
+with open('resources_for_animation/LaxWendroff_scheme/1_withoutTime.csv', newline = '') as file:
     reader = csv.reader(file, quoting=csv.QUOTE_NONNUMERIC)
     data = list(reader)
 
@@ -19,7 +19,7 @@ def analytical(t):
     return np.sin(4*np.pi*(x-t)/20)
 
 line_analytical = ax.plot(x, analytical(0), 'b.--', label='analytical solution')[0]
-line = ax.plot(x, data[0], 'ro--', label='upwind scheme')[0]
+line = ax.plot(x, data[0], 'ro--', label='Lax-Wendroff scheme')[0]
 
 ax.set(xlim=[0, 20], ylim=[-1.1, 1.1], xlabel='x', ylabel='u(x,t)', title='Courant number = 0.6')
 ax.legend(loc='upper right')
@@ -33,5 +33,5 @@ def update(frame):
     return (line, line_analytical)
 
 anima = animation.FuncAnimation(fig=fig, func=update, frames=61, interval=300)
-anima.save(project_directpry_path+'/results/advection_equation/AdvectionEquation_1.gif', writer='pillow')
+anima.save(project_directpry_path+'/results/advection_equation/LaxWendroff_1.gif', writer='pillow')
 plt.show()

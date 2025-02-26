@@ -19,11 +19,13 @@ struct Grid {
     double Courant;
     double h_t;
 
-    std::array<double, 41> initialCondition;
+    std::array<double, N_x> initialCondition;
 
-    Grid(double const Co, std::array<double, 41> const& u0)
+    Grid(double const Co, std::array<double, N_x> const& u0)
         : Courant(Co), h_t(Co*h_x), initialCondition(u0) {}
     
-    std::vector<std::array<double, 41>> solveUpwind() const;
+    std::vector<std::array<double, N_x>> solveUpwind() const;
+
+    std::vector<std::array<double, N_x>> solveLaxWendroff() const;
 };
 
